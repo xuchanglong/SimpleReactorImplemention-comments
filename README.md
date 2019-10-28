@@ -1,21 +1,4 @@
-Simple Reactor Implemention
-====================
-This is a simple implementation of reactor which use epoll as the event multiplexer and the min-heap as the manage container of timed-task. If you want to use it in industrial environment, i think the "ACE" is best solution.
-
-You can compile the code by using the following shell command:
-
->g++ -o reactor_server reactor_server_test.cc event_demultiplexer.cc reactor.cc global.cc   
->g++ -o reactor_client reactor_client_test.cc event_demultiplexer.cc reactor.cc global.cc   
-
-After that, two executable programs will be made.
-
-You can use them in this way:
-
->./reactor_server 127.0.0.1 6852   
->./reactor_client 127.0.0.1 6852   
-
-
-Simple Reactor Implemention
+Simple Reactor Implemention Comments
 ===========================
 ****
 	
@@ -33,14 +16,15 @@ Simple Reactor Implemention
 　　如果我的分享能够帮助大家进步，请告诉我，我会非常开心的。😊  
 　　感谢 SimpleReactorImplemention 项目作者的开源精神，让我对 Reactor 模式框架原理有了深刻的理解，在这里对他表示非常的感谢！
 ### 一、使用说明
-　　g++ -o reactor_server reactor_server_test.cc event_demultiplexer.cc reactor.cc global.cc   
-　　g++ -o reactor_client reactor_client_test.cc event_demultiplexer.cc reactor.cc global.cc   
+>g++ -o reactor_server reactor_server_test.cc event_demultiplexer.cc reactor.cc global.cc   
+>g++ -o reactor_client reactor_client_test.cc event_demultiplexer.cc reactor.cc global.cc   
 
-　　./reactor_server 127.0.0.1 6852   
-　　./reactor_client 127.0.0.1 6852   
+>./reactor_server 127.0.0.1 6852   
+>./reactor_client 127.0.0.1 6852   
 ### 二、整体框架
 （后期补充）
 ### 三、更新日志
 （后期补充）
+
 
 （ 完 ）
