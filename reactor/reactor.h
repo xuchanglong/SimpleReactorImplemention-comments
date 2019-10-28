@@ -1,8 +1,8 @@
 #ifndef REACTOR_REACTOR_H_
 #define REACTOR_REACTOR_H_
 
-#include "../other/singleton.h"
-#include "../other/timeheap.h"
+#include "../other/singleton.hpp"
+#include "../other/timeheap.hpp"
 
 #include <stdint.h>
 #include <unistd.h>

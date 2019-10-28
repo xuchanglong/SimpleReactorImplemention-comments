@@ -1,4 +1,4 @@
-#include "other/test_common.h"
+#include "other/test_common.hpp"
 #include "eventhandler/timeclient.hpp"
 
 #include <stdio.h>

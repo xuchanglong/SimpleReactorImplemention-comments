@@ -12,14 +12,17 @@ DIR_REACTOR = ./reactor
 
 all:$(TARGET_SERVER) $(TARGET_CLIENT)
 
-#$(TARGET_SERVER):reactor_server_test.cc $(DIR_EVENTDEMULTIPLEXER)/event_demultiplexer.cc $(DIR_REACTOR)/reactor.cc $(DIR_OTHER)/global.cc
-#	$(CC) $< -o $@ $(CFLAGS)
+$(TARGET_SERVER):reactor_server_test.cc $(DIR_OBJ)/event_demultiplexer.o $(DIR_OBJ)/reactor.o $(DIR_OBJ)/global.o 
+	$(CC) $< -o $@ $(CFLAGS)
 
-#$(TARGET_CLIENT):reactor_client_test.cc $(DIR_EVENTDEMULTIPLEXER)/event_demultiplexer.cc $(DIR_REACTOR)/reactor.cc $(DIR_OTHER)/global.cc
-#	$(CC) $< -o $@ $(CFLAGS)
-g++ -o $(TARGET_SERVER) reactor_server_test.cc ./eventDemultiplexer/event_demultiplexer.cc ./reactor/reactor.cc ./other/global.cc
+$(DIR_OBJ)/event_demultiplexer.o:$(DIR_EVENTDEMULTIPLEXER)\event_demultiplexer.cc $(DIR_EVENTDEMULTIPLEXER)\event_demultiplexer.h
+	$(CC) $< -c $@ $(CFLAGS)
 
-g++ -o $(TARGET_CLIENT) reactor_client_test.cc ./eventDemultiplexer/event_demultiplexer.cc ./reactor/reactor.cc ./other/global.cc
+$(DIR_OBJ)/reactor.o:$(DIR_REACTOR)\reactor.cc $(DIR_REACTOR)\reactor.h $(DIR_OTHER)\timeheap.hpp
+	$(CC) $< -c $@ $(CFLAGS)
+
+$(DIR_OBJ)/global.o:$(DIR_OTHER)\global.cc $(DIR_OTHER)\global.h $(DIR_OTHER)\singleton.hpp
+	$(CC) $^ -c $@ $(CFLAGS)
 
 .PHONY:clean
 clean:

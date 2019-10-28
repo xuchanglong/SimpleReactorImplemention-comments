@@ -5,12 +5,12 @@
 
 #include <string.h>
 
-extern bool IsValidHandle(reactor::handle_t handle)
+bool IsValidHandle(reactor::handle_t handle)
 {
     return handle >= 0;
 }
 
-extern void ReportSocketError(const char *msg)
+void ReportSocketError(const char *msg)
 {
     fprintf(stderr, "%s error: %s\n", msg, strerror(errno));
 }

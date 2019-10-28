@@ -2,7 +2,7 @@
 #define OTHER_GLOBAL_H_
 
 #include "../reactor/reactor.h"
-#include "singleton.h"
+#include "singleton.hpp"
 
 //reactor::Reactor g_reactor;
 #define g_reactor (*(sGlobal->g_reactor_ptr))
