@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "reactor.h"
-#include "event_demultiplexer.h"
+#include "../eventDemultiplexer/event_demultiplexer.h"
 
 #define INITSIZE 100
 
@@ -10,19 +10,33 @@ class ReactorImplementation
 {
 public:
     ReactorImplementation();
-
     ~ReactorImplementation();
 
+public:
+    /**
+     * @function    将事件处理者和句柄绑定，并将句柄和事件放到 epoll 红黑树中。
+     * @paras   handler 事件处理者。
+     *          evt 待监控的事件，也是该事件处理者能够处理的事件。
+     * @ret 0   操作成功。
+    */
     int RegisterHandler(EventHandler *handler, event_t evt);
 
     int RemoveHandler(EventHandler *handler);
 
+    /**
+     * @function    调用各种事件处理器处理事件的函数。
+     * @paras   none 。
+     * @ret none 。
+    */
     void HandleEvents();
 
     int RegisterTimerTask(heap_timer *timerevent);
 
 private:
     EventDemultiplexer *m_demultiplexer;
+    /**
+     * 保存句柄和该事件处理者。
+    */
     std::map<handle_t, EventHandler *> m_handlers;
     time_heap *m_eventtimer;
 };

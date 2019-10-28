@@ -1,12 +1,12 @@
 #ifndef REACTOR_REACTOR_H_
 #define REACTOR_REACTOR_H_
 
+#include "../other/singleton.h"
+#include "../other/timeheap.h"
+
 #include <stdint.h>
 #include <unistd.h>
 #include <sys/epoll.h>
-
-#include "singleton.h"
-#include "timeheap.h"
 
 namespace reactor
 {
@@ -21,21 +21,33 @@ enum
 
 typedef int handle_t;
 
+/**
+ * 基类，事件处理者。
+ * 所有的需要处理事件的类都派生与他。
+*/
 class EventHandler
 {
-public:
-    virtual handle_t GetHandle() const = 0;
-
-    virtual void HandleRead() {}
-
-    virtual void HandleWrite() {}
-
-    virtual void HandleError() {}
-
 protected:
     EventHandler() {}
-
     virtual ~EventHandler() {}
+
+public:
+    /**
+     * 返回该事件处理者的句柄。
+    */
+    virtual handle_t GetHandle() const = 0;
+    /**
+     * 处理读事件的接口。
+    */
+    virtual void HandleRead() {}
+    /**
+     * 处理写事件的接口。
+    */
+    virtual void HandleWrite() {}
+    /**
+     * 处理错误事件的接口。
+    */
+    virtual void HandleError() {}
 };
 
 class ReactorImplementation;
@@ -44,9 +56,9 @@ class Reactor
 {
 public:
     Reactor();
-
     ~Reactor();
 
+public:
     int RegisterHandler(EventHandler *handler, event_t evt);
 
     int RemoveHandler(EventHandler *handler);

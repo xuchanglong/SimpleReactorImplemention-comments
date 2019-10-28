@@ -1,7 +1,9 @@
 #ifndef REACTOR_TEST_COMMON_H_
 #define REACTOR_TEST_COMMON_H_
 
-#include "reactor.h"
+#include "../reactor/reactor.h"
+
+#include <string.h>
 
 extern bool IsValidHandle(reactor::handle_t handle)
 {

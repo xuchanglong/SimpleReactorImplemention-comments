@@ -38,6 +38,9 @@ int EpollDemultiplexer::WaitEvents(
             }
             else
             {
+                /**
+                 * 调用该句柄对应的事件处理者的读写函数。
+                */
                 if (ep_evts[idx].events & EPOLLIN)
                 {
                     (*handlers)[handle]->HandleRead();
