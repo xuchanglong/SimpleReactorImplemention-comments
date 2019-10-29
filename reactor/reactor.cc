@@ -14,17 +14,26 @@ public:
 
 public:
     /**
-     * @function    将事件处理者和句柄绑定，并将句柄和事件放到 epoll 红黑树中。
+     * @function    将事件处理者信息注册到 Reactor 中。
      * @paras   handler 事件处理者。
      *          evt 待监控的事件，也是该事件处理者能够处理的事件。
      * @ret 0   操作成功。
+     *      -1  形参为空。
+     *      其他    操作失败。
     */
     int RegisterHandler(EventHandler *handler, event_t evt);
 
+    /**
+     * @function    将该事件处理者信息从 Rector 中删除。
+     * @paras   hanlder 待删除的事件处理者。
+     * @ret 0   操作成功
+     *      -1  形参为空。
+     *      其他    操作失败。
+    */
     int RemoveHandler(EventHandler *handler);
 
     /**
-     * @function    调用各种事件处理器处理事件的函数。
+     * @function    监控事件的到来并分发事件到各个事件处理者。
      * @paras   none 。
      * @ret none 。
     */
@@ -33,11 +42,18 @@ public:
     int RegisterTimerTask(heap_timer *timerevent);
 
 private:
-    EventDemultiplexer *m_demultiplexer;
     /**
-     * 保存句柄和该事件处理者。
+     * 工厂模式，指向具体的多路事件分配器。
+     * 现在指向的是基于 epoll 的多路事件分配器，
+     * 将来可以使用 select、poll 等其他的多路分配器。
+    */
+    EventDemultiplexer *m_demultiplexer;
+
+    /**
+     * 保存句柄和该事件处理者的映射关系。
     */
     std::map<handle_t, EventHandler *> m_handlers;
+
     time_heap *m_eventtimer;
 };
 
@@ -84,10 +100,15 @@ ReactorImplementation::ReactorImplementation()
 ReactorImplementation::~ReactorImplementation()
 {
     delete m_demultiplexer;
+    m_demultiplexer = nullptr;
 }
 
 int ReactorImplementation::RegisterHandler(EventHandler *handler, event_t evt)
 {
+    if (handler == nullptr)
+    {
+        return -1;
+    }
     handle_t handle = handler->GetHandle();
     std::map<handle_t, EventHandler *>::iterator it = m_handlers.find(handle);
     if (it == m_handlers.end())
@@ -99,12 +120,16 @@ int ReactorImplementation::RegisterHandler(EventHandler *handler, event_t evt)
 
 int ReactorImplementation::RemoveHandler(EventHandler *handler)
 {
+    if (handler == nullptr)
+    {
+        return -1;
+    }
+
     handle_t handle = handler->GetHandle();
     m_handlers.erase(handle);
     return m_demultiplexer->UnrequestEvent(handle);
 }
 
-//parm timeout is useless.
 void ReactorImplementation::HandleEvents()
 {
     int timeout = 0;
@@ -121,8 +146,10 @@ void ReactorImplementation::HandleEvents()
 
 int ReactorImplementation::RegisterTimerTask(heap_timer *timerevent)
 {
-    if (timerevent == NULL)
+    if (timerevent == nullptr)
+    {
         return -1;
+    }
     m_eventtimer->add_timer(timerevent);
     return 0;
 }

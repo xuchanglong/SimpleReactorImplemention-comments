@@ -36,8 +36,8 @@ public:
     ~EpollDemultiplexer();
 
     /**
-     * @function    分发事件给事件处理者。
-     * @paras   handlers    保存了句柄和事件处理者的映射关系。
+     * @function    分发事件给事件处理器。
+     * @paras   handlers    保存了句柄和事件处理器的映射关系。
      *          timeout epoll 中监控事件来与否的超时时间。
      *          event_timer 后续补充。
      * @ret 实际发生了事件的句柄的数量。

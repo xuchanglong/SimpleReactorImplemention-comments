@@ -133,7 +133,7 @@ public:
     }
 
     /**
-     * 处理 server（事件处理者）的读事件。
+     * 处理 server（事件处理器）的读事件。
      * 即：接收 client 发来的连接。
     */
     virtual void HandleRead()
@@ -160,7 +160,9 @@ public:
     }
 
 private:
-    //  保存监听 socket 描述符。
+    /**
+     * 保存监听 socket 描述符。
+     */
     reactor::handle_t m_handle;
     std::string m_ip;
     unsigned short m_port;

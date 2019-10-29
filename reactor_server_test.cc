@@ -46,9 +46,16 @@ int main(int argc, char **argv)
     fprintf(stderr, "register a task which will be run is five seconds!\n");
     g_reactor.RegisterTimerTask(printtask);
 
+    /**
+     * （3）向 Reactor 中注册事件处理器：server 。
+    */
+    g_reactor.RegisterHandler(&server, reactor::kReadEvent);
+
     while (true)
     {
-        g_reactor.RegisterHandler(&server, reactor::kReadEvent);
+        /**
+         * （4）监控并分发事件到各个事件处理器。
+        */
         g_reactor.HandleEvents();
     }
     return EXIT_SUCCESS;

@@ -19,7 +19,7 @@ Simple Reactor Implemention Comments
 >直接 make，在根目录会生成 “server.o” 和 “client.o” 这两个文件，分别运行即可。  
 ### 二、目录介绍
    * reactor：（后序补充）
-   * eventhandler：事件处理者，server 和 client 均属于事件处理者，处理的事件包括连接的建立、数据的接收和发送以及连接的断开。
+   * eventhandler：事件处理器，server 和 client 均属于事件处理器，处理的事件包括连接的建立、数据的接收和发送以及连接的断开。
    * eventDemultiplexer：事件分配器，需要 OS 的支持，包括 select、poll、epoll 和 IOCP（Input Output Completion Ports）。
    * obj：目标文件的存放位置。
    * other：其他功能的文件存放位置。
