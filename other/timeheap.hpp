@@ -60,8 +60,8 @@ public:
             array[i] = NULL;
         }
     }
-    time_heap(heap_timer **init_array, int size, int capacity) 
-        : cur_size(size), capacity(capacity)
+    time_heap(heap_timer **init_array, int capacity, int size) 
+        : capacity(capacity),cur_size(size)
     {
         if (capacity < size)
         {
