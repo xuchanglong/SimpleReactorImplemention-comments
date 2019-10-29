@@ -15,6 +15,9 @@ all:$(TARGET_SERVER) $(TARGET_CLIENT)
 $(TARGET_SERVER):reactor_server_test.cc $(DIR_OBJ)/event_demultiplexer.o $(DIR_OBJ)/reactor.o $(DIR_OBJ)/global.o 
 	$(CC) $^ -o $@ $(CFLAGS)
 
+$(TARGET_CLIENT):reactor_client_test.cc $(DIR_OBJ)/event_demultiplexer.o $(DIR_OBJ)/reactor.o $(DIR_OBJ)/global.o 
+	$(CC) $^ -o $@ $(CFLAGS)
+
 $(DIR_OBJ)/event_demultiplexer.o:$(DIR_EVENTDEMULTIPLEXER)/event_demultiplexer.cc $(DIR_EVENTDEMULTIPLEXER)/event_demultiplexer.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
