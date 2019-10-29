@@ -16,15 +16,18 @@ Simple Reactor Implemention Comments
 　　如果我的分享能够帮助大家进步，请告诉我，我会非常开心的。😊  
 　　感谢 SimpleReactorImplemention 项目作者的开源精神，让我对 Reactor 模式框架原理有了更加深刻的理解，在这里对他表示非常的感谢！
 ### 一、使用说明
->g++ -o reactor_server reactor_server_test.cc event_demultiplexer.cc reactor.cc global.cc   
->g++ -o reactor_client reactor_client_test.cc event_demultiplexer.cc reactor.cc global.cc   
-
->./reactor_server 127.0.0.1 6852   
->./reactor_client 127.0.0.1 6852   
-### 二、整体框架
+>直接 make，在根目录会生成 “server.o” 和 “client.o” 这两个文件，分别运行即可。  
+### 二、目录介绍
+   * reactor：（后序补充）
+   * eventhandler：事件处理者，server 和 client 均属于事件处理者，处理的事件包括连接的建立、数据的接收和发送以及连接的断开。
+   * eventDemultiplexer：事件分配器，需要 OS 的支持，包括 select、poll、epoll 和 IOCP（Input Output Completion Ports）。
+   * obj：目标文件的存放位置。
+   * other：其他功能的文件存放位置。
+### 三、整体框架
 （后期补充）
-### 三、更新日志
-（后期补充）
-
+### 四、更新日志
+1、2019-10-30
+   * 按照 Reactor 模式各个模块整理出目录，分别是 reacotr、eventDemultiplexer 和 eventhandler。
+   * 完成 makefile 的编写，消除各种编译警告。 
 
 （ 完 ）
