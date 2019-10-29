@@ -1,5 +1,5 @@
-#include "other/test_common.hpp"
-#include "eventhandler/timeserver.hpp"
+#include "test_common.hpp"
+#include "timeserver.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
     /**
      * 命令行参数，第1个是 IP ，第2个是 port 。
-     * 启动服务器。
+     * （1）启动服务器。
     */
     TimeServer server(argv[1], atoi(argv[2]));
     if (!server.Start())

@@ -1,5 +1,5 @@
-#include "other/test_common.hpp"
-#include "eventhandler/timeclient.hpp"
+#include "test_common.hpp"
+#include "timeclient.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -9,6 +9,10 @@ using std::exception;
 #define BUFFER_SIZE 64
 
 class heap_timer;
+
+/**
+ * 用户数据，绑定 socket 和定时器。
+*/
 struct client_data
 {
     sockaddr_in address;
@@ -17,6 +21,9 @@ struct client_data
     heap_timer *timer;
 };
 
+/**
+ * 定时器类。
+*/
 class heap_timer
 {
 public:
@@ -26,6 +33,9 @@ public:
     }
 
 public:
+    /**
+     * 定时器生效的绝对时间。
+    */
     time_t expire;
     void (*cb_func)(client_data *);
     client_data *user_data;
@@ -209,8 +219,19 @@ private:
     }
 
 private:
+    /**
+     * 堆数组。
+    */
     heap_timer **array;
+
+    /**
+     * 堆数组容量。
+    */
     int capacity;
+
+    /**
+     * 堆数组当前包含的元素的个数。
+    */
     int cur_size;
 };
 

@@ -1,7 +1,7 @@
 #ifndef OTHER_GLOBAL_H_
 #define OTHER_GLOBAL_H_
 
-#include "../reactor/reactor.h"
+#include "reactor.h"
 #include "singleton.hpp"
 
 //reactor::Reactor g_reactor;

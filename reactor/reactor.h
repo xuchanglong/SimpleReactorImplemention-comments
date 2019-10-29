@@ -1,8 +1,8 @@
 #ifndef REACTOR_REACTOR_H_
 #define REACTOR_REACTOR_H_
 
-#include "../other/singleton.hpp"
-#include "../other/timeheap.hpp"
+#include "singleton.hpp"
+#include "timeheap.hpp"
 
 #include <stdint.h>
 #include <unistd.h>
@@ -23,7 +23,7 @@ typedef int handle_t;
 
 /**
  * 基类，事件处理者。
- * 所有的需要处理事件的类都派生与他。
+ * 所有的需要处理事件的类都派生与它。
 */
 class EventHandler
 {

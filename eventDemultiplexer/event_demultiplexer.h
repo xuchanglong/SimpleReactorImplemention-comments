@@ -3,12 +3,12 @@
 
 #include <set>
 #include <map>
-#include "../reactor/reactor.h"
+#include "reactor.h"
 
 namespace reactor
 {
 /**
- * 接口类，事件多路分配器。
+ * 抽象类，事件多路分配器。
 */
 class EventDemultiplexer
 {
@@ -53,6 +53,12 @@ public:
     */
     virtual int RequestEvent(handle_t handle, event_t evt);
 
+    /**
+     * @function    从 epoll 红黑树中删除指定的 socket 对应的要监控的事件。
+     * @paras   handle  socket 描述符。
+     * @ret 0   操作成功
+     *      非0 操作失败。
+    */
     virtual int UnrequestEvent(handle_t handle);
 
 private:
