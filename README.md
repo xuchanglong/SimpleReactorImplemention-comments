@@ -18,16 +18,16 @@ Simple Reactor Implemention Comments
 ### 一、使用说明
 >直接 make，在根目录会生成 “server.o” 和 “client.o” 这两个文件，分别运行即可。  
 ### 二、目录介绍
-   * reactor：（后序补充）
-   * eventhandler：事件处理器，server 和 client 均属于事件处理器，处理的事件包括连接的建立、数据的接收和发送以及连接的断开。
-   * eventDemultiplexer：事件分配器，需要 OS 的支持，包括 select、poll、epoll 和 IOCP（Input Output Completion Ports）。
+   * reactor：Reactor 模式核心文件的存储位置。
+   * eventhandler：各种事件处理器（包括：server 和 client ）源代码存储位置。
+   * eventDemultiplexer：各种事件分配器（包括：select、poll、epoll 和 IOCP）源代码存储位置。
    * obj：目标文件的存放位置。
    * other：其他功能的文件存放位置。
 ### 三、整体框架
 ![框架](框架图.jpg)
 ### 四、更新日志
 1、2019-10-30
-   * 按照 Reactor 模式各个模块整理出目录，分别是 reacotr、eventDemultiplexer 和 eventhandler。
+   * 按照 Reactor 模式各个模块整理出目录，分别是 reactor、eventDemultiplexer 和 eventhandler。
    * 完成 makefile 的编写，消除各种编译警告。 
    * 初步完成框架图的编写。
 
