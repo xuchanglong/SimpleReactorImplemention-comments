@@ -24,7 +24,7 @@ Simple Reactor Implemention Comments
    * obj：目标文件的存放位置。
    * other：其他功能的文件存放位置。
 ### 三、整体框架
-（后期补充）
+![框架](框架图.jpg)
 ### 四、更新日志
 1、2019-10-30
    * 按照 Reactor 模式各个模块整理出目录，分别是 reacotr、eventDemultiplexer 和 eventhandler。
