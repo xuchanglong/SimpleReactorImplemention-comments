@@ -33,6 +33,6 @@ void Singleton<T>::release()
 
 #define DECLARE_SINGLETON_MEMBER(_Ty) \
     template <>                       \
-    _Ty *Singleton<_Ty>::_instance = NULL;
+    _Ty *Singleton<_Ty>::_instance = nullptr;
 
 #endif //_SINGLETON_H

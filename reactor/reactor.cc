@@ -133,13 +133,13 @@ int ReactorImplementation::RemoveHandler(EventHandler *handler)
 void ReactorImplementation::HandleEvents()
 {
     int timeout = 0;
-    if (m_eventtimer->top() == NULL)
+    if (m_eventtimer->top() == nullptr)
     {
         timeout = 0;
     }
     else
     {
-        timeout = ((m_eventtimer->top())->expire - time(NULL)) * 1000;
+        timeout = ((m_eventtimer->top())->expire - time(nullptr)) * 1000;
     }
     m_demultiplexer->WaitEvents(&m_handlers, timeout, m_eventtimer);
 }

@@ -25,7 +25,7 @@ public:
         time_t tt;
 
         memset(now, 0, 64);
-        tt = time(NULL);
+        tt = time(nullptr);
         ttime = localtime(&tt);
         strftime(now, 64, "%Y-%m-%d %H:%M:%S", ttime);
 

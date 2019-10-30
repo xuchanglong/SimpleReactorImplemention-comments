@@ -52,7 +52,7 @@ int EpollDemultiplexer::WaitEvents(
             }
         }
     }
-    if (event_timer != NULL)
+    if (event_timer != nullptr)
     {
         event_timer->tick();
     }

@@ -10,5 +10,5 @@ Global::Global(void)
 Global::~Global(void)
 {
     delete g_reactor_ptr;
-    g_reactor_ptr = NULL;
+    g_reactor_ptr = nullptr;
 }

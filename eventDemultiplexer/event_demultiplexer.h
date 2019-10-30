@@ -16,7 +16,7 @@ public:
     virtual ~EventDemultiplexer() {}
 
     virtual int WaitEvents(std::map<handle_t, EventHandler *> *handlers,
-                           int timeout = 0, time_heap *event_timer = NULL) = 0;
+                           int timeout = 0, time_heap *event_timer = nullptr) = 0;
 
     virtual int RequestEvent(handle_t handle, event_t evt) = 0;
 
@@ -43,7 +43,7 @@ public:
      * @ret 实际发生了事件的句柄的数量。
     */
     virtual int WaitEvents(std::map<handle_t, EventHandler *> *handlers,
-                           int timeout = 0, time_heap *event_timer = NULL);
+                           int timeout = 0, time_heap *event_timer = nullptr);
 
     /**
      * @function    向 epoll 红黑树中修改/增加指定的句柄和事件。
