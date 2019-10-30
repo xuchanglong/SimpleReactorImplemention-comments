@@ -29,5 +29,6 @@ Simple Reactor Implemention Comments
 1、2019-10-30
    * 按照 Reactor 模式各个模块整理出目录，分别是 reacotr、eventDemultiplexer 和 eventhandler。
    * 完成 makefile 的编写，消除各种编译警告。 
+   * 初步完成框架图的编写。
 
 （ 完 ）
