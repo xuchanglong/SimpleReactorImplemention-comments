@@ -32,9 +32,9 @@ class EpollDemultiplexer : public EventDemultiplexer
 {
 public:
     EpollDemultiplexer();
-
     ~EpollDemultiplexer();
 
+public:
     /**
      * @function    分发事件给事件处理器。
      * @paras   handlers    保存了句柄和事件处理器的映射关系。
