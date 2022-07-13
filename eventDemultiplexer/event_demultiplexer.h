@@ -5,18 +5,17 @@
 #include <map>
 #include "reactor.h"
 
-namespace reactor
-{
+namespace reactor {
 /**
  * 抽象类，事件多路分配器。
 */
-class EventDemultiplexer
-{
+class EventDemultiplexer {
 public:
     virtual ~EventDemultiplexer() {}
 
     virtual int WaitEvents(std::map<handle_t, EventHandler *> *handlers,
-                           int timeout = 0, time_heap *event_timer = nullptr) = 0;
+        int timeout = 0, time_heap *event_timer = nullptr)
+        = 0;
 
     virtual int RequestEvent(handle_t handle, event_t evt) = 0;
 
@@ -28,8 +27,7 @@ public:
 /**
  * 基于 epoll 的事件多路分配器。
 */
-class EpollDemultiplexer : public EventDemultiplexer
-{
+class EpollDemultiplexer : public EventDemultiplexer {
 public:
     EpollDemultiplexer();
     ~EpollDemultiplexer();
@@ -43,7 +41,7 @@ public:
      * @ret 实际发生了事件的句柄的数量。
     */
     virtual int WaitEvents(std::map<handle_t, EventHandler *> *handlers,
-                           int timeout = 0, time_heap *event_timer = nullptr);
+        int timeout = 0, time_heap *event_timer = nullptr);
 
     /**
      * @function    向 epoll 红黑树中修改/增加指定的句柄和事件。

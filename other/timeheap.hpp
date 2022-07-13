@@ -13,8 +13,7 @@ class heap_timer;
 /**
  * 用户数据，绑定 socket 和定时器。
 */
-struct client_data
-{
+struct client_data {
     sockaddr_in address;
     int sockfd;
     char buf[BUFFER_SIZE];
@@ -24,8 +23,7 @@ struct client_data
 /**
  * 定时器类。
 */
-class heap_timer
-{
+class heap_timer {
 public:
     heap_timer(int delay)
     {
@@ -44,59 +42,50 @@ public:
 /**
  * 基于时间堆的高性能定时器。
 */
-class time_heap
-{
+class time_heap {
 public:
     time_heap(size_t cap)
-        : capacity(cap), cur_size(0)
+        : capacity(cap)
+        , cur_size(0)
     {
         array = new heap_timer *[capacity];
-        if (array == nullptr)
-        {
+        if (array == nullptr) {
             throw std::exception();
         }
-        for (size_t i = 0; i < capacity; ++i)
-        {
+        for (size_t i = 0; i < capacity; ++i) {
             array[i] = nullptr;
         }
     }
     time_heap(heap_timer **init_array, size_t capacity, size_t size)
-        : capacity(capacity), cur_size(size)
+        : capacity(capacity)
+        , cur_size(size)
     {
-        if (init_array == nullptr)
-        {
+        if (init_array == nullptr) {
             return;
         }
 
-        if (capacity < size)
-        {
+        if (capacity < size) {
             throw std::exception();
         }
         array = new heap_timer *[capacity];
-        if (array == nullptr)
-        {
+        if (array == nullptr) {
             throw std::exception();
         }
-        for (size_t i = 0; i < capacity; ++i)
-        {
+        for (size_t i = 0; i < capacity; ++i) {
             array[i] = nullptr;
         }
-        if (size != 0)
-        {
-            for (size_t i = 0; i < size; ++i)
-            {
+        if (size != 0) {
+            for (size_t i = 0; i < size; ++i) {
                 array[i] = init_array[i];
             }
-            for (size_t i = (cur_size - 1) / 2; i >= 0; --i)
-            {
+            for (size_t i = (cur_size - 1) / 2; i >= 0; --i) {
                 percolate_down(i);
             }
         }
     }
     ~time_heap()
     {
-        for (size_t i = 0; i < cur_size; ++i)
-        {
+        for (size_t i = 0; i < cur_size; ++i) {
             delete array[i];
             array[i] = nullptr;
         }
@@ -114,21 +103,17 @@ public:
     */
     int add_timer(heap_timer *timer)
     {
-        if (timer == nullptr)
-        {
+        if (timer == nullptr) {
             return -1;
         }
-        if (cur_size >= capacity)
-        {
+        if (cur_size >= capacity) {
             resize();
         }
         int hole = cur_size++;
         int parent = 0;
-        for (; hole > 0; hole = parent)
-        {
+        for (; hole > 0; hole = parent) {
             parent = (hole - 1) / 2;
-            if (array[parent]->expire <= timer->expire)
-            {
+            if (array[parent]->expire <= timer->expire) {
                 break;
             }
             array[hole] = array[parent];
@@ -145,8 +130,7 @@ public:
     */
     int del_timer(heap_timer *timer)
     {
-        if (timer == nullptr)
-        {
+        if (timer == nullptr) {
             return -1;
         }
         // lazy delelte
@@ -155,20 +139,17 @@ public:
     }
     heap_timer *top() const
     {
-        if (empty())
-        {
+        if (empty()) {
             return nullptr;
         }
         return array[0];
     }
     void pop_timer()
     {
-        if (empty())
-        {
+        if (empty()) {
             return;
         }
-        if (array[0])
-        {
+        if (array[0]) {
             delete array[0];
             array[0] = array[--cur_size];
             percolate_down(0);
@@ -182,18 +163,14 @@ public:
     {
         heap_timer *tmp = array[0];
         time_t cur = time(nullptr);
-        while (!empty())
-        {
-            if (!tmp)
-            {
+        while (!empty()) {
+            if (!tmp) {
                 break;
             }
-            if (tmp->expire > cur)
-            {
+            if (tmp->expire > cur) {
                 break;
             }
-            if (array[0]->cb_func)
-            {
+            if (array[0]->cb_func) {
                 array[0]->cb_func(array[0]->user_data);
             }
             pop_timer();
@@ -210,19 +187,14 @@ private:
     {
         heap_timer *temp = array[hole];
         size_t child = 0;
-        for (; ((hole * 2 + 1) <= (cur_size - 1)); hole = child)
-        {
+        for (; ((hole * 2 + 1) <= (cur_size - 1)); hole = child) {
             child = hole * 2 + 1;
-            if ((child < (cur_size - 1)) && (array[child + 1]->expire < array[child]->expire))
-            {
+            if ((child < (cur_size - 1)) && (array[child + 1]->expire < array[child]->expire)) {
                 ++child;
             }
-            if (array[child]->expire < temp->expire)
-            {
+            if (array[child]->expire < temp->expire) {
                 array[hole] = array[child];
-            }
-            else
-            {
+            } else {
                 break;
             }
         }
@@ -235,17 +207,14 @@ private:
     void resize()
     {
         heap_timer **temp = new heap_timer *[2 * capacity];
-        for (size_t i = 0; i < 2 * capacity; ++i)
-        {
+        for (size_t i = 0; i < 2 * capacity; ++i) {
             temp[i] = nullptr;
         }
-        if (!temp)
-        {
+        if (!temp) {
             throw std::exception();
         }
         capacity = 2 * capacity;
-        for (size_t i = 0; i < cur_size; ++i)
-        {
+        for (size_t i = 0; i < cur_size; ++i) {
             temp[i] = array[i];
         }
         delete[] array;

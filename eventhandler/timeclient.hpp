@@ -6,10 +6,10 @@
 #include <arpa/inet.h>
 #include <assert.h>
 
-class TimeClient : public reactor::EventHandler
-{
+class TimeClient : public reactor::EventHandler {
 public:
-    TimeClient() : EventHandler()
+    TimeClient()
+        : EventHandler()
     {
         m_handle = socket(AF_INET, SOCK_STREAM, 0);
         assert(IsValidHandle(m_handle));
@@ -26,8 +26,7 @@ public:
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
         addr.sin_addr.s_addr = inet_addr(ip);
-        if (connect(m_handle, (struct sockaddr *)&addr, sizeof(addr)) < 0)
-        {
+        if (connect(m_handle, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
             ReportSocketError("connect");
             return false;
         }
@@ -43,13 +42,10 @@ public:
     {
         memset(g_read_buffer, 0, BUFFERSIZE);
         int len = recv(m_handle, g_read_buffer, BUFFERSIZE, 0);
-        if (len > 0)
-        {
+        if (len > 0) {
             fprintf(stderr, "%s", g_read_buffer);
             g_reactor.RegisterHandler(this, reactor::kWriteEvent);
-        }
-        else
-        {
+        } else {
             ReportSocketError("recv");
         }
     }
@@ -59,13 +55,10 @@ public:
         memset(g_write_buffer, 0, BUFFERSIZE);
         int len = sprintf(g_write_buffer, "time\r\n");
         len = send(m_handle, g_write_buffer, len, 0);
-        if (len > 0)
-        {
+        if (len > 0) {
             fprintf(stderr, "%s", g_write_buffer);
             g_reactor.RegisterHandler(this, reactor::kReadEvent);
-        }
-        else
-        {
+        } else {
             ReportSocketError("send");
         }
     }

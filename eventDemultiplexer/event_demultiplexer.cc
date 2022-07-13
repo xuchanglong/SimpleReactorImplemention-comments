@@ -3,8 +3,7 @@
 #include <vector>
 #include "event_demultiplexer.h"
 
-namespace reactor
-{
+namespace reactor {
 EpollDemultiplexer::EpollDemultiplexer()
 {
     m_epoll_fd = ::epoll_create(FD_SETSIZE);
@@ -25,35 +24,26 @@ int EpollDemultiplexer::WaitEvents(
     std::vector<epoll_event> ep_evts(m_fd_num);
     //  获取已发生事件的 epoll_event 。
     int num = epoll_wait(m_epoll_fd, &ep_evts[0], ep_evts.size(), timeout);
-    if (num > 0)
-    {
-        for (int idx = 0; idx < num; ++idx)
-        {
+    if (num > 0) {
+        for (int idx = 0; idx < num; ++idx) {
             handle_t handle = ep_evts[idx].data.fd;
             assert(handlers->find(handle) != handlers->end());
-            if ((ep_evts[idx].events & EPOLLERR) ||
-                (ep_evts[idx].events & EPOLLHUP))
-            {
+            if ((ep_evts[idx].events & EPOLLERR) || (ep_evts[idx].events & EPOLLHUP)) {
                 (*handlers)[handle]->HandleError();
-            }
-            else
-            {
+            } else {
                 /**
                  * 调用该句柄对应的事件处理器的读写函数。
                 */
-                if (ep_evts[idx].events & EPOLLIN)
-                {
+                if (ep_evts[idx].events & EPOLLIN) {
                     (*handlers)[handle]->HandleRead();
                 }
-                if (ep_evts[idx].events & EPOLLOUT)
-                {
+                if (ep_evts[idx].events & EPOLLOUT) {
                     (*handlers)[handle]->HandleWrite();
                 }
             }
         }
     }
-    if (event_timer != nullptr)
-    {
+    if (event_timer != nullptr) {
         event_timer->tick();
     }
 
@@ -66,22 +56,17 @@ int EpollDemultiplexer::RequestEvent(handle_t handle, event_t evt)
     ep_evt.data.fd = handle;
     ep_evt.events = 0;
 
-    if (evt & kReadEvent)
-    {
+    if (evt & kReadEvent) {
         ep_evt.events |= EPOLLIN;
     }
-    if (evt & kWriteEvent)
-    {
+    if (evt & kWriteEvent) {
         ep_evt.events |= EPOLLOUT;
     }
     ep_evt.events |= EPOLLONESHOT;
 
-    if (epoll_ctl(m_epoll_fd, EPOLL_CTL_MOD, handle, &ep_evt) != 0)
-    {
-        if (errno == ENOENT)
-        {
-            if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, handle, &ep_evt) != 0)
-            {
+    if (epoll_ctl(m_epoll_fd, EPOLL_CTL_MOD, handle, &ep_evt) != 0) {
+        if (errno == ENOENT) {
+            if (epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, handle, &ep_evt) != 0) {
                 return -errno;
             }
             ++m_fd_num;
@@ -93,8 +78,7 @@ int EpollDemultiplexer::RequestEvent(handle_t handle, event_t evt)
 int EpollDemultiplexer::UnrequestEvent(handle_t handle)
 {
     epoll_event ep_evt;
-    if (epoll_ctl(m_epoll_fd, EPOLL_CTL_DEL, handle, &ep_evt) != 0)
-    {
+    if (epoll_ctl(m_epoll_fd, EPOLL_CTL_DEL, handle, &ep_evt) != 0) {
         return -errno;
     }
     --m_fd_num;

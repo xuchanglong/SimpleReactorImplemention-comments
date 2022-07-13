@@ -8,11 +8,9 @@
 #include <unistd.h>
 #include <sys/epoll.h>
 
-namespace reactor
-{
+namespace reactor {
 typedef unsigned int event_t;
-enum
-{
+enum {
     kReadEvent = 0x01,
     kWriteEvent = 0x02,
     kErrorEvent = 0x04,
@@ -25,8 +23,7 @@ typedef int handle_t;
  * 抽象类，事件处理者。
  * 所有的需要处理事件的类都继承于它。
 */
-class EventHandler
-{
+class EventHandler {
 protected:
     EventHandler() {}
     virtual ~EventHandler() {}
@@ -59,8 +56,7 @@ class ReactorImplementation;
  * 规范了用于事件调度的方式，提供了对事件处理器的注册、删除等设施。
  * 是整个 Reactor 模式的核心所在。
 */
-class Reactor
-{
+class Reactor {
 public:
     Reactor();
     ~Reactor();

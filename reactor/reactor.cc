@@ -4,10 +4,8 @@
 
 #define INITSIZE 100
 
-namespace reactor
-{
-class ReactorImplementation
-{
+namespace reactor {
+class ReactorImplementation {
 public:
     ReactorImplementation();
     ~ReactorImplementation();
@@ -105,14 +103,12 @@ ReactorImplementation::~ReactorImplementation()
 
 int ReactorImplementation::RegisterHandler(EventHandler *handler, event_t evt)
 {
-    if (handler == nullptr)
-    {
+    if (handler == nullptr) {
         return -1;
     }
     handle_t handle = handler->GetHandle();
     std::map<handle_t, EventHandler *>::iterator it = m_handlers.find(handle);
-    if (it == m_handlers.end())
-    {
+    if (it == m_handlers.end()) {
         m_handlers[handle] = handler;
     }
     return m_demultiplexer->RequestEvent(handle, evt);
@@ -120,8 +116,7 @@ int ReactorImplementation::RegisterHandler(EventHandler *handler, event_t evt)
 
 int ReactorImplementation::RemoveHandler(EventHandler *handler)
 {
-    if (handler == nullptr)
-    {
+    if (handler == nullptr) {
         return -1;
     }
 
@@ -133,12 +128,9 @@ int ReactorImplementation::RemoveHandler(EventHandler *handler)
 void ReactorImplementation::HandleEvents()
 {
     int timeout = 0;
-    if (m_eventtimer->top() == nullptr)
-    {
+    if (m_eventtimer->top() == nullptr) {
         timeout = 0;
-    }
-    else
-    {
+    } else {
         timeout = ((m_eventtimer->top())->expire - time(nullptr)) * 1000;
     }
     m_demultiplexer->WaitEvents(&m_handlers, timeout, m_eventtimer);
@@ -146,8 +138,7 @@ void ReactorImplementation::HandleEvents()
 
 int ReactorImplementation::RegisterTimerTask(heap_timer *timerevent)
 {
-    if (timerevent == nullptr)
-    {
+    if (timerevent == nullptr) {
         return -1;
     }
     m_eventtimer->add_timer(timerevent);

@@ -22,8 +22,7 @@ void printHelloworld(client_data *data)
 
 int main(int argc, char **argv)
 {
-    if (argc < 3)
-    {
+    if (argc < 3) {
         fprintf(stderr, "usage: %s ip port\n", argv[0]);
         return EXIT_FAILURE;
     }
@@ -33,8 +32,7 @@ int main(int argc, char **argv)
      * （1）启动服务器。
     */
     TimeServer server(argv[1], atoi(argv[2]));
-    if (!server.Start())
-    {
+    if (!server.Start()) {
         fprintf(stderr, "start server failed\n");
         return EXIT_FAILURE;
     }
@@ -51,8 +49,7 @@ int main(int argc, char **argv)
     */
     g_reactor.RegisterHandler(&server, reactor::kReadEvent);
 
-    while (true)
-    {
+    while (true) {
         /**
          * （4）监控并分发事件到各个事件处理器。
         */

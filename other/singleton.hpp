@@ -2,8 +2,7 @@
 #define _SINGLETON_H
 
 template <class T>
-class Singleton
-{
+class Singleton {
 public:
     static inline T *instance();
     void release();
