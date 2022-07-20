@@ -1,8 +1,8 @@
 CC = g++
 CFLAGS = -g -Wall
 
-TARGET_SERVER = server.o
-TARGET_CLIENT = client.o
+TARGET_SERVER = ./bin/server
+TARGET_CLIENT = ./bin/client
 
 DIR_OBJ = ./obj
 DIR_EVENTDEMULTIPLEXER = ./eventDemultiplexer
@@ -29,6 +29,6 @@ $(DIR_OBJ)/global.o:$(DIR_OTHER)/global.cc $(DIR_OTHER)/global.h $(DIR_OTHER)/si
 
 .PHONY:clean
 clean:
-	rm -rf $(DIR_OTHER)/*.o
+	rm -rf $(DIR_OBJ)/*.o
 	rm -rf $(TARGET_SERVER)
 	rm -rf $(TARGET_CLIENT)

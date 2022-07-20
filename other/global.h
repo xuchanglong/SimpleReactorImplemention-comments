@@ -13,8 +13,7 @@ extern char g_write_buffer[BUFFERSIZE];
 
 //class reactor::Reactor;
 
-class Global : public Singleton<Global>
-{
+class Global : public Singleton<Global> {
 public:
     Global(void);
     ~Global(void);

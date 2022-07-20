@@ -18,7 +18,6 @@ public:
         = 0;
 
     virtual int RequestEvent(handle_t handle, event_t evt) = 0;
-
     virtual int UnrequestEvent(handle_t handle) = 0;
 };
 

@@ -16,7 +16,7 @@ Simple Reactor Implemention Comments
 　　如果我的分享能够帮助大家进步，请告诉我，我会非常开心的。😊  
 　　感谢 SimpleReactorImplemention 项目作者的开源精神，让我对 Reactor 模式框架原理有了更加深刻的理解，在这里对他表示非常的感谢！
 ### 一、使用说明
->直接 make，在根目录会生成 “server.o” 和 “client.o” 这两个文件，分别运行即可。  
+>直接 make，在根目录会生成 “server” 和 “client” 这两个文件，分别运行即可。  
 ### 二、目录介绍
    * reactor：Reactor 模式核心文件的存储位置。
    * eventhandler：各种事件处理器（包括：server 和 client ）源代码存储位置。

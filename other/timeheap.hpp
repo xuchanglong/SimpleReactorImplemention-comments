@@ -12,7 +12,7 @@ class heap_timer;
 
 /**
  * 用户数据，绑定 socket 和定时器。
-*/
+ */
 struct client_data {
     sockaddr_in address;
     int sockfd;
@@ -22,18 +22,15 @@ struct client_data {
 
 /**
  * 定时器类。
-*/
+ */
 class heap_timer {
 public:
-    heap_timer(int delay)
-    {
-        expire = time(nullptr) + delay;
-    }
+    heap_timer(int delay) { expire = time(nullptr) + delay; }
 
 public:
     /**
-     * 定时器生效的绝对时间。
-    */
+   * 定时器生效的绝对时间。
+   */
     time_t expire;
     void (*cb_func)(client_data *);
     client_data *user_data;
@@ -41,7 +38,7 @@ public:
 
 /**
  * 基于时间堆的高性能定时器。
-*/
+ */
 class time_heap {
 public:
     time_heap(size_t cap)
@@ -95,12 +92,12 @@ public:
 
 public:
     /**
-     * @function    向最小堆中加入定时器，按照定时器生效的绝对时间对最小堆重构，
-     *              使其满足最小堆的性质。
-     * @paras   timer   被加入到最小堆的定时器。
-     * @ret 0   操作成功。
-     *      -1  形参为空。
-    */
+   * @function    向最小堆中加入定时器，按照定时器生效的绝对时间对最小堆重构，
+   *              使其满足最小堆的性质。
+   * @paras   timer   被加入到最小堆的定时器。
+   * @ret 0   操作成功。
+   *      -1  形参为空。
+   */
     int add_timer(heap_timer *timer)
     {
         if (timer == nullptr) {
@@ -123,11 +120,11 @@ public:
     }
 
     /**
-     * @function    从最小堆中删除定时器。
-     * @paras   待删除的定时器。
-     * @ret 0   操作成功。
-     *      -1  形参为空。
-    */
+   * @function    从最小堆中删除定时器。
+   * @paras   待删除的定时器。
+   * @ret 0   操作成功。
+   *      -1  形参为空。
+   */
     int del_timer(heap_timer *timer)
     {
         if (timer == nullptr) {
@@ -137,6 +134,7 @@ public:
         timer->cb_func = nullptr;
         return 0;
     }
+    // 获取最小堆定点节点信息。
     heap_timer *top() const
     {
         if (empty()) {
@@ -144,6 +142,7 @@ public:
         }
         return array[0];
     }
+    // 去掉最小堆定点节点信息。
     void pop_timer()
     {
         if (empty()) {
@@ -151,14 +150,21 @@ public:
         }
         if (array[0]) {
             delete array[0];
-            array[0] = array[--cur_size];
-            percolate_down(0);
+            cur_size--;
+            if (cur_size == 0) {
+                // 若最小堆数据为空，则不进行重新排布。
+                array[0] = nullptr;
+            } else {
+                array[0] = array[cur_size];
+                percolate_down(0);
+            }
         }
     }
 
     /**
-     * 从时间堆中寻找到时间的节点。
-    */
+   * 从时间堆中寻找到时间的节点。
+   * 若存在时间点已经到期，则调用回掉函数，并 pop 已经到期的时间节点。
+   */
     void tick()
     {
         heap_timer *tmp = array[0];
@@ -181,8 +187,8 @@ public:
 
 private:
     /**
-     * 对堆节点进行下滤，确保第 hole 节点满足最小堆性质。
-    */
+   * 对堆节点进行下滤，确保第 hole 节点满足最小堆性质。
+   */
     void percolate_down(size_t hole)
     {
         heap_timer *temp = array[hole];
@@ -202,8 +208,8 @@ private:
     }
 
     /**
-     * 空间不足时，将空间扩大为原来的 2 倍。
-    */
+   * 空间不足时，将空间扩大为原来的 2 倍。
+   */
     void resize()
     {
         heap_timer **temp = new heap_timer *[2 * capacity];
@@ -223,18 +229,18 @@ private:
 
 private:
     /**
-     * 堆数组。
-    */
+   * 堆数组。
+   */
     heap_timer **array;
 
     /**
-     * 堆数组容量。
-    */
+   * 堆数组容量。
+   */
     size_t capacity;
 
     /**
-     * 堆数组当前包含的元素的个数。
-    */
+   * 堆数组当前包含的元素的个数。
+   */
     size_t cur_size;
 };
 

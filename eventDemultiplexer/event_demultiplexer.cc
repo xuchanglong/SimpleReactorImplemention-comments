@@ -16,8 +16,7 @@ EpollDemultiplexer::~EpollDemultiplexer()
     ::close(m_epoll_fd);
 }
 
-int EpollDemultiplexer::WaitEvents(
-    std::map<handle_t, EventHandler *> *handlers,
+int EpollDemultiplexer::WaitEvents(std::map<handle_t, EventHandler *> *handlers,
     int timeout, time_heap *event_timer)
 {
     //  申请用于保存已发送事件的 epoll_event 。
